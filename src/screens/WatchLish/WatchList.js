@@ -7,6 +7,7 @@ import MovieCardHorizontal from '../../components/common/MovieCardHorizontal'
 import { scale } from '../../themes/responsiveSize'
 import WrapperContainer from '../../components/common/WrapperContainer'
 import HeaderWithLogout from '../../components/common/HeaderWithLogout'
+import { ListEmptyComponent } from '../../utils/constants'
 
 
 const Wishlist = () => {
@@ -34,6 +35,8 @@ const Wishlist = () => {
     data={moviesArray}
     renderItem={movieCardRender}
     keyExtractor={item => item.id.toString()}
+    ListEmptyComponent={ListEmptyComponent}
+
     />
     </WrapperContainer>
   )

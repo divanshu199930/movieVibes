@@ -6,6 +6,9 @@ import MovieCard from '../../components/common/MovieCard'
 import MovieCardHorizontal from '../../components/common/MovieCardHorizontal'
 import HeaderWithLogout from '../../components/common/HeaderWithLogout'
 import WrapperContainer from '../../components/common/WrapperContainer'
+import commonStyles from '../../themes/commonStyles'
+import colors from '../../themes/colors'
+import { ListEmptyComponent } from '../../utils/constants'
 
 
 const Wishlist = () => {
@@ -23,14 +26,19 @@ const Wishlist = () => {
         )
     
       }
+
+      
   return (
     <WrapperContainer>
+        
+        
         <HeaderWithLogout title={'Your Wishy Wishlist.'}/>
 
     <FlatList
     data={moviesArray}
     renderItem={movieCardRender}
     keyExtractor={item => item.id.toString()}
+    ListEmptyComponent={ListEmptyComponent}
     />
     </WrapperContainer>
   )

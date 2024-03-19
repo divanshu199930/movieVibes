@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -21,17 +21,21 @@ import Loader from './Loader';
 const MovieCard = ({movie, onAddToFavorites, onAddToWatchlist, status}) => {
   const navigation = useNavigation();
   const posterUri = `https://image.tmdb.org/t/p/w500${movie?.poster_path}`;
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <TouchableOpacity
       style={styles.card}
-      activeOpacity={0.9}
+      disabled={isLoading}
+      activeOpacity={0.8}
       onPress={() => {
         navigation.navigate(NavigationStrings.MOVIE_DETAIL, {movie: movie.id});
       }}>
       <ImageBackground
         source={{uri: posterUri}}
         style={styles.poster}
+        onLoad={() => setIsLoading(false)}
+        onError={() => setIsLoading(false)}
         resizeMode="cover">
         <View
           style={{
@@ -62,7 +66,7 @@ const MovieCard = ({movie, onAddToFavorites, onAddToWatchlist, status}) => {
           <Image source={movie.isAddingToWatchlist ? ImagePath.CHECK : ImagePath.ADD} style={styles.add}/>
         </TouchableOpacity>
       </ImageBackground>
-      {!!!posterUri &&<Loader/> }
+      {isLoading &&<Loader/> }
     </TouchableOpacity>
   );
 };
@@ -120,35 +124,3 @@ const styles = StyleSheet.create({
 
 export default MovieCard;
 
-// <View style={styles.overlay}>
-//         <Rating
-//           type='star'
-//           ratingCount={5}
-//           imageSize={20}
-//           ratingBackgroundColor='rgba(11, 11, 25, 0.9)'
-//           startingValue={movie?.vote_average / 2}
-//           readonly
-//           style={styles.rating}
-//         />
-//         {/* <CircularProgress
-//   value={movie?.vote_averag*10}
-//   activeStrokeColor={'#2465FD'}
-//   activeStrokeSecondaryColor={'#C25AFF'}
-// /> */}
-//           <TouchableOpacity
-//             style={styles.actionButton}
-//             onPress={() => onAddToFavorites(movie)}
-//           >
-//             <Icon name="favorite-border" size={24} color="#B22222" />
-//             {/* <Text style={styles.actionText}>Add to Favorites</Text> */}
-//           </TouchableOpacity>
-//           <TouchableOpacity
-//             style={styles.actionButton}
-//             onPress={() => onAddToWishlist(movie)}
-//           >
-//             <Icon name="bookmark-border" size={24} color="#1E90FF" />
-//             {/* <Text style={styles.actionText}>Add to Wishlist</Text> */}
-//           </TouchableOpacity>
-//         <Text style={styles.title}>{movie?.title}</Text>
-
-//       </View>
